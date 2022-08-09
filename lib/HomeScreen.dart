@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                   width: 400,
                   height: 200,
                   image: AssetImage(
-                    'assets/cryptoshare.png',
+                    'assets/images/cryptoshare.png',
                   )),
               Row(
                 children: const [
