@@ -42,6 +42,9 @@ dependencies:
   flutter_neumorphic: ^3.2.0
   conditional_questions: ^2.0.0
   language_picker: ^0.4.1
+  shared_preferences: ^2.0.15
+  currency_picker: ^2.0.11
+  dropdown_search: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +81,8 @@ flutter:
   assets:
      - assets/images/cryptoshare.png
      - assets/lottie/
+     - assets/resources/currencies.json
+     - assets/resources/languages.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,5 +1,6 @@
 import 'package:conditional_questions/conditional_questions.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +30,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _key = GlobalKey<QuestionFormState>();
+
+  @override
+  void initState(){
+    super.initState();
+    print("Hello");
+    getPrefs();
+  }
+
+  void getPrefs() async{
+    final prefs = await SharedPreferences.getInstance();
+// Save the currency
+    await prefs.setString('currency', 'MXN');
+// Get the currency
+    final currency = prefs.getString('currency') ?? '';
+    print(currency);
+  }
 
   @override
   Widget build(BuildContext context) {
