@@ -31,17 +31,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
 // Initial Selected Value
-  String languageDropdownValue = "Select Language";
-  String currencyDropdownValue = "Select Currency";
+  String languageDropdownValue = "Pick Language";
+  String currencyDropdownValue = "Pick Currency";
 
 
 // List of items in our dropdown menu
   var languageDropdownItems = [
-    'Select Language'
+    'Pick Language'
   ];
 
   var currencyDropdownItems = [
-    'Select Currency'
+    'Pick Currency'
   ];
 
   @override
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(padding: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
+              Padding(padding: const EdgeInsets.only(top: 50.0, bottom: 8.0)),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -127,30 +127,12 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(child: DropdownButton(
-                    isExpanded:true,
-
-                    // Initial Value
-                    value: currencyDropdownValue,
-
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
-
-                    // Array list of items
-                    items: currencyDropdownItems.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        currencyDropdownValue = newValue!;
-                      });
-                    },
-                  )),
+                  Expanded(child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Enter your Savings',
+                    ),
+                  ),),
                   Padding(padding: const EdgeInsets.only(left: 10.0)),
                   Expanded(child: DropdownButton(
                     isExpanded:true,
@@ -177,10 +159,42 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                   )),
                 ],
+              ),
+              Padding(padding: const EdgeInsets.only(top: 50.0, bottom: 50.0)),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(child: Text(
+                    'Lets Calculate your Wealth Score!',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),),
+                  Padding(padding: const EdgeInsets.only(left: 10.0)),
+                ],
+              ),
+              Padding(padding: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(child: ElevatedButton(
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.resolveWith<double?>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return 16;
+                            return null;
+                          }),
+                    ),
+                    onPressed: () { },
+                    child: Text('Start'),
+                  ),),
+                  Padding(padding: const EdgeInsets.only(left: 10.0)),
+                ],
               )
             ],
           ),
-        )
+        ),
       ),
     );
   }
