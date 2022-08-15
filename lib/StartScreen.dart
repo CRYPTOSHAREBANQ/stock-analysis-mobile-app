@@ -1,13 +1,18 @@
 import 'dart:convert';
+import 'dart:ffi';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'QuestionsScreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const StartScreen());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class StartScreen extends StatelessWidget {
+  const StartScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,18 +35,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-// Initial Selected Value
-  String languageDropdownValue = "Pick Language";
-  String currencyDropdownValue = "Pick Currency";
+  static const String initialLanguageValue = "Pick Language";
+  static const String initialDropdownValue = "Pick Currency";
 
+// Initial Selected Value
+  String languageDropdownValue = initialLanguageValue;
+  String currencyDropdownValue = initialDropdownValue;
+
+  int languageCredits = 0;
+  int currencyCredits = 0;
+  int credits = 0;
 
 // List of items in our dropdown menu
   var languageDropdownItems = [
-    'Pick Language'
+    initialLanguageValue
   ];
 
   var currencyDropdownItems = [
-    'Pick Currency'
+    initialDropdownValue
   ];
 
   @override
@@ -54,8 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
   fetchData() async {
    var currencies = await getCurrencies();
    var languages = await getLanguages();
-   print(currencies);
-   print(languages);
    languageDropdownItems = languageDropdownItems + languages;
    currencyDropdownItems = currencyDropdownItems + currencies;
   }
@@ -79,6 +88,23 @@ class _MyHomePageState extends State<MyHomePage> {
     return currencies;
   }
 
+  sendForm() async {
+    if (languageDropdownValue == initialLanguageValue ||
+        currencyDropdownValue == initialDropdownValue) {
+      print("ERROR");
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("language", languageDropdownValue);
+    await prefs.setString("currency", currencyDropdownValue);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const QuestionsPage(title: 'Flutter Demo Home Page')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +119,18 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Padding(padding: const EdgeInsets.only(top: 10.0, bottom: 8.0)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Spacer(),
+                  Image.asset(
+                    'assets/images/cryptocoin_temporal.png',
+                    fit: BoxFit.contain,
+                    width: 40),
+                  Text(" + $credits", style: const TextStyle(fontWeight: FontWeight.bold)),
+                ],
+              ),
               Padding(padding: const EdgeInsets.only(top: 50.0, bottom: 8.0)),
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -116,6 +154,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     // After selecting the desired option,it will
                     // change button value to selected value
                     onChanged: (String? newValue) {
+                      if (newValue == initialLanguageValue) {
+                        languageCredits = 0;
+                      } else {
+                        languageCredits = 1;
+                      }
+                      credits = languageCredits + currencyCredits;
+
                       setState(() {
                         languageDropdownValue = newValue!;
                       });
@@ -127,13 +172,6 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Enter your Savings',
-                    ),
-                  ),),
-                  Padding(padding: const EdgeInsets.only(left: 10.0)),
                   Expanded(child: DropdownButton(
                     isExpanded:true,
 
@@ -153,6 +191,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     // After selecting the desired option,it will
                     // change button value to selected value
                     onChanged: (String? newValue) {
+                      if (newValue == initialDropdownValue) {
+                        currencyCredits = 0;
+                      } else {
+                        currencyCredits = 2;
+                      }
+                      credits = languageCredits + currencyCredits;
+
                       setState(() {
                         currencyDropdownValue = newValue!;
                       });
@@ -186,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             return null;
                           }),
                     ),
-                    onPressed: () { },
+                    onPressed: sendForm,
                     child: Text('Start'),
                   ),),
                   Padding(padding: const EdgeInsets.only(left: 10.0)),

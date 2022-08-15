@@ -4,6 +4,8 @@ import 'package:lottie/lottie.dart';
 import 'HomeScreen.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'StartScreen.dart';
+
 
 ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
   onPrimary: Colors.white,
@@ -47,7 +49,7 @@ class SplashScreen extends StatelessWidget {
     return AnimatedSplashScreen(
         splash: Lottie.asset('assets/lottie/loading-page.json'),
         backgroundColor: Colors.white,
-        nextScreen: const HomeScreen(),
+        nextScreen: const StartScreen(),
         splashIconSize: 250,
       duration: 3000,
       splashTransition: SplashTransition.fadeTransition,
