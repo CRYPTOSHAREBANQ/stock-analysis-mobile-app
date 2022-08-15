@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stock_analysis_app/LoginScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:stock_analysis_app/QuestionsScreen.dart';
+import 'firebase_options.dart';
+
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -83,7 +88,44 @@ class _RegistrationScreen extends State<RegistrationScreen> {
             Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Firebase.initializeApp(
+                      options: DefaultFirebaseOptions.currentPlatform,
+                    );
+                    try {
+                      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        email: email.text,
+                        password: password.text,
+                      ).then((value) => (){
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        );
+                      });
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak-password') {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return const AlertDialog(
+                                title: Text("Error Message"),
+                                content: Text("The password provided is too weak."),
+                              );
+                            });
+                      } else if (e.code == 'email-already-in-use') {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return const AlertDialog(
+                                title: Text("Error Message"),
+                                content: Text("The account already exists for that email."),
+                              );
+                            });
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
+
+                  },
                   child: const Text("Register"),
                 )),
             Padding(

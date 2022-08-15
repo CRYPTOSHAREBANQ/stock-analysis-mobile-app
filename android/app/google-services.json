@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "405883801070",
+    "project_id": "cryptoshare-wealth-app",
+    "storage_bucket": "cryptoshare-wealth-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405883801070:android:0cb8a4319d1b85e99ed2ff",
+        "android_client_info": {
+          "package_name": "com.example.stock_analysis_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405883801070-vseksmfb34srdnnagi5j5r08h0d9l1bd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxb-dKqHPBnm97cpccJ49070aLrUcpT4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405883801070-vseksmfb34srdnnagi5j5r08h0d9l1bd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "405883801070-01iuttq0jlgvvsc5851ilhtsnpvtph4q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.stockAnalysisApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
