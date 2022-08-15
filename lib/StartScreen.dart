@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stock_analysis_app/LoginScreen.dart';
 
 import 'QuestionsScreen.dart';
 
@@ -20,7 +21,7 @@ class StartScreen extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
