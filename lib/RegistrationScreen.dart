@@ -97,20 +97,10 @@ class _RegistrationScreen extends State<RegistrationScreen> {
                         await FirebaseAuth.instance.createUserWithEmailAndPassword(
                           email: email.text,
                           password: password.text,
-                        ).then((value) => (){
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext ctx) {
-                                return const AlertDialog(
-                                  title: Text("Registration Successful"),
-                                  content: Text("Your Account has been successfully created, Login to access app"),
-                                );
-                              });
-                          print(value);
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          );
-                        });
+                        );
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ));
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
                           showDialog(

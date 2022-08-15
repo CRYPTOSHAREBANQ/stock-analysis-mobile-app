@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:stock_analysis_app/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_analysis_app/StartScreen.dart';
+
+import 'firebase_options.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -92,18 +95,20 @@ class _LoginScreen extends State<LoginScreen> {
                   padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
                   child: ElevatedButton(
                     onPressed: () async {
+                      await Firebase.initializeApp(
+                        options: DefaultFirebaseOptions.currentPlatform,
+                      );
                       try {
                         final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
                             email: email.text,
                             password: password.text
-                        ).then((value) => (){
-                          Navigator.push(context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    MyHomePage(),
-                              )
-                          );
-                        });
+                        );
+                        Navigator.push(context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MyHomePage(),
+                            )
+                        );
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'user-not-found') {
                           showDialog(
