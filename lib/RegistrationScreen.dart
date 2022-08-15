@@ -7,12 +7,9 @@ class RegistrationScreen extends StatefulWidget {
     // TODO: implement createState
     return _RegistrationScreen();
   }
-
-
 }
 
-class _RegistrationScreen extends State<RegistrationScreen>
-{
+class _RegistrationScreen extends State<RegistrationScreen> {
   final email = TextEditingController();
   final password = TextEditingController();
 
@@ -21,13 +18,17 @@ class _RegistrationScreen extends State<RegistrationScreen>
     ;
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Registration"),
-      ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.fromLTRB(16.0, 60, 16.0, 16.0),
         child: Column(
           children: [
+            RichText(
+                text: TextSpan(
+                    text: "Register",
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold))),
             const Image(
                 width: 400,
                 height: 200,
@@ -82,21 +83,20 @@ class _RegistrationScreen extends State<RegistrationScreen>
             Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
                 child: ElevatedButton(
-                  onPressed: () {
-
-                  },
-                  child: const Text("Login"),
+                  onPressed: () {},
+                  child: const Text("Register"),
                 )),
             Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 10.0),
                 child: TextButton(
-                  onPressed: () {Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          LoginScreen(),
-                    ),
-                  );},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
                   child: const Text("Already Have an account? Login"),
                 )),
           ],

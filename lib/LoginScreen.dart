@@ -24,13 +24,17 @@ class _LoginScreen extends State<LoginScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Login"),
-      ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.fromLTRB(16.0, 60, 16.0, 16.0),
         child: Column(
           children: [
+            RichText(text: TextSpan(text: "Login",style: TextStyle(
+              color: Colors.blue,
+              fontSize: 30,
+              fontWeight: FontWeight.bold
+            ))
+
+            ),
             const Image(
                 width: 400,
                 height: 200,

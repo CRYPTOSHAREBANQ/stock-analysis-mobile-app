@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const QuestionsPage(title: 'Flutter Demo Home Page')),
+      MaterialPageRoute(builder: (context) => const QuestionsPage(title: 'Wealth Creation Survey')),
     );
   }
 
