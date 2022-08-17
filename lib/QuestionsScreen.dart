@@ -1,15 +1,21 @@
 import 'dart:convert';
 import 'package:conditional_questions/conditional_questions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'StartScreen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    initialRoute: 'questions',
+    routes: {'questions': (context) => QuestionsPage()},
+      debugShowCheckedModeBanner: false,
+    color: CupertinoColors.tertiarySystemBackground,
+  ));
 }
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,10 +23,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: QuestionsPage(title: 'Flutter Demo Home Page'),
+      home: QuestionsPage(title: 'Wealth Creation Survey'),
     );
   }
-}
+}*/
 
 class QuestionsPage extends StatefulWidget {
   const QuestionsPage({Key? key, this.title}) : super(key: key);
@@ -89,6 +95,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
     setState(() {
       currency;
       savingsAmount;
+      credits;
     });
   }
 
@@ -122,7 +129,6 @@ class _QuestionsPageState extends State<QuestionsPage> {
           counter += 1;
         }
       }
-
       if (counter == questionElements.length) {
         credits += 16;
         _alertAllQuestions(context);
@@ -134,7 +140,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
     }
     print(credits);
 
-    // Add the credits widget on top AND bottom.
+    setState(() {
+      credits;
+    });
   }
 
 
@@ -142,20 +150,24 @@ class _QuestionsPageState extends State<QuestionsPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Expanded(
-          child: AlertDialog(
-            title: Text('Congrats'),
-            content: Text('You have officially started Building Wealth'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyHomePage()));
-                },
-                child: Text('Return', style: TextStyle(color: Colors.black),),
+        return Column(
+          children: [
+            Expanded(
+              child: AlertDialog(
+                title: Text('Congrats'),
+                content: Text('You have officially started Building Wealth'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyHomePage()));
+                      },
+                    child: Text('Return', style: TextStyle(color: Colors.black),),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
@@ -165,54 +177,80 @@ class _QuestionsPageState extends State<QuestionsPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Expanded(
-          child: AlertDialog(
-            title: Text('Congrats'),
-            content: Text('Thanks for taking Our Survey. Now its time to Build Wealth!'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyHomePage()));
-                },
-                child: Text('Return', style: TextStyle(color: Colors.black),),
+        return Column(
+          children: [
+            Expanded(
+              child: AlertDialog(
+                title: Text('Congrats'),
+                content: Text('Thanks for taking Our Survey. Now its time to Build Wealth!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyHomePage()));
+                    },
+                    child: Text('Return', style: TextStyle(color: Colors.black),),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
   }
 
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(widget.title!),
-      ),
-      body: Center(
-            child: FractionallySizedBox(
-              heightFactor: 1,
-              widthFactor: 0.9,
-                          child: ConditionalQuestions(
-                            key: _key,
-                            children: questions(savingsAmount, currency),
-                            trailing: [
-                              MaterialButton(
-                                color: Colors.lightBlue,
-                                splashColor: Colors.blueAccent,
-                                onPressed: validateQuestions,
-                                child: Text("Submit"),
-                              )
-                            ],
-                          ),
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.bodyText2!,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: viewportConstraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: <Widget>[
+                    Padding(padding: const EdgeInsets.only(top: 20.0, bottom: 8.0)),
+                    Container(
+                      color: CupertinoColors.tertiarySystemBackground,
+                      child: Row(children: [
+                        Spacer(),
+                        Image.asset(
+                            'assets/images/cryptocoin_temporal.png',
+                            fit: BoxFit.contain,
+                            width: 40),
+                        Text(" + $credits  ", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),],),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: CupertinoColors.tertiarySystemBackground,
+                        height: 120.0,
+                        alignment: Alignment.center,
+                        child: ConditionalQuestions(
+                          key: _key,
+                          children: questions(savingsAmount, currency),
+                          trailing: [
+                            MaterialButton(
+                              color: Colors.blue.shade700,
+                              splashColor: Colors.blueAccent,
+                              onPressed: validateQuestions,
+                              child: Text("Submit"), textColor: CupertinoColors.secondarySystemBackground,
+                            ),
+                          ],
                         ),
-                  ),
-              );
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
-
-
 
 }

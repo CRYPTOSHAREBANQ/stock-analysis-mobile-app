@@ -1,31 +1,32 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stock_analysis_app/LoginScreen.dart';
-
 import 'QuestionsScreen.dart';
 
 void main() {
-  runApp(const StartScreen());
+  runApp(MaterialApp(
+    initialRoute: 'start',
+    routes: {'start': (context) => MyHomePage()},
+      debugShowCheckedModeBanner: false
+  ));
 }
 
-class StartScreen extends StatelessWidget {
+/*class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter DropDownButton',
+      title: 'Wealth Creation Survey',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: LoginScreen(),
+      home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
-}
+}*/
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -109,9 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Start Page"),
-      ),
       body: Center(
         child: FractionallySizedBox(
           heightFactor: 1,
@@ -126,25 +124,37 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Spacer(),
                   Image.asset(
-                    'assets/images/cryptocoin_temporal.png',
-                    fit: BoxFit.contain,
-                    width: 40),
+                      'assets/images/cryptocoin_temporal.png',
+                      fit: BoxFit.contain,
+                      width: 40),
                   Text(" + $credits", style: const TextStyle(fontWeight: FontWeight.bold)),
                 ],
               ),
-              Padding(padding: const EdgeInsets.only(top: 50.0, bottom: 8.0)),
+              Padding(padding: const EdgeInsets.only(top: 10.0, bottom: 8.0)),
+              Row(
+                mainAxisAlignment : MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child:
+                    Image.asset(
+                        'assets/images/icon-screen.png',
+                        fit: BoxFit.contain,
+                        width: 300)
+                  ),
+                ],
+              ),
+              Padding(padding: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(child: DropdownButton(
                     isExpanded:true,
-
                     // Initial Value
                     value: languageDropdownValue,
-
                     // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down),
-
                     // Array list of items
                     items: languageDropdownItems.map((String items) {
                       return DropdownMenuItem(
@@ -206,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
                 ],
               ),
-              Padding(padding: const EdgeInsets.only(top: 50.0, bottom: 50.0)),
+              Padding(padding: const EdgeInsets.only(top: 8.0, bottom: 30.0)),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

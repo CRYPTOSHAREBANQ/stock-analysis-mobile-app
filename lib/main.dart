@@ -16,15 +16,14 @@ ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
 );
 
 void main() {
-  runApp(const MyApp());
-  // runApp(const MaterialApp(
-  //   debugShowCheckedModeBanner: false,
-  //   title: 'Stock Analysis App',
-  //   home: HomeScreen(),
-  // ));
+  runApp(MaterialApp(
+    initialRoute: 'splash',
+    routes: {'splash': (context) => SplashScreen()},
+      debugShowCheckedModeBanner: false
+  ));
 }
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -32,12 +31,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
         ),
         home: const SplashScreen(),
     );
   }
-}
+}*/
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -47,7 +46,7 @@ class SplashScreen extends StatelessWidget {
     return AnimatedSplashScreen(
         splash: Lottie.asset('assets/lottie/loading-page.json'),
         backgroundColor: Colors.white,
-        nextScreen: const StartScreen(),
+        nextScreen: const MyHomePage(),
         splashIconSize: 250,
       duration: 3000,
       splashTransition: SplashTransition.fadeTransition,

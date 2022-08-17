@@ -6,7 +6,6 @@ import 'package:stock_analysis_app/StartScreen.dart';
 
 import 'firebase_options.dart';
 
-
 class LoginScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -24,22 +23,22 @@ class _LoginScreen extends State<LoginScreen> {
     password.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(16.0, 60, 16.0, 16.0),
-        child:SingleChildScrollView(
-          child:  Column(
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              RichText(text: TextSpan(text: "Login",style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold
-              ))
-
-              ),
+              RichText(
+                  text: TextSpan(
+                      text: "Login",
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold))),
               const Image(
                   width: 400,
                   height: 200,
@@ -99,16 +98,14 @@ class _LoginScreen extends State<LoginScreen> {
                         options: DefaultFirebaseOptions.currentPlatform,
                       );
                       try {
-                        final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-                            email: email.text,
-                            password: password.text
-                        );
-                        Navigator.push(context,
+                        final credential = await FirebaseAuth.instance
+                            .signInWithEmailAndPassword(
+                                email: email.text, password: password.text);
+                        Navigator.push(
+                            context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  MyHomePage(),
-                            )
-                        );
+                              builder: (context) => MyHomePage(),
+                            ));
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'user-not-found') {
                           showDialog(
@@ -126,7 +123,8 @@ class _LoginScreen extends State<LoginScreen> {
                               builder: (BuildContext ctx) {
                                 return const AlertDialog(
                                   title: Text("Login Error"),
-                                  content: Text("Wrong password provided for that user."),
+                                  content: Text(
+                                      "Wrong password provided for that user."),
                                 );
                               });
                           print('Wrong password provided for that user.');
@@ -140,7 +138,8 @@ class _LoginScreen extends State<LoginScreen> {
                   child: TextButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegistrationScreen()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => RegistrationScreen()));
                     },
                     child: Text("Don't Have an account? Register Now"),
                   )),
